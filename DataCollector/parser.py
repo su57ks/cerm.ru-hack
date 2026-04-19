@@ -30,6 +30,6 @@ for letter in links.keys():
 
     words = re.findall(r"<a class=\"spelling_search_result\" href=\"https://gram.cerm.ru/spelling/(.*?)\">(.*?)</a>", words)
 
-    words = [word[1] for word in words]
+    words = [re.findall(r"(.*?)<span class=\"right\">(.*?)</span>(.*)", word[1]) for word in words]
 
     print(words)
