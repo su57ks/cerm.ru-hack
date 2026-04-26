@@ -2,11 +2,15 @@
   "manifest_version": 3,
   "name": "cerm.ru hack by su57ks",
   "version": "1.0",
-  "description": "Помогает легко выполнять задания",
+  "description": "Помогает легко выполнять задания (нет)",
   "content_scripts": [
     {
       "matches": ["https://login.cerm.ru/*"],
       "js": ["content.js"]
     }
-  ]
+  ],
+  "web_accessible_resources": [{
+    "resources": ["answers.json"],
+    "matches": ["https://login.cerm.ru/*"]
+  }]
 }
