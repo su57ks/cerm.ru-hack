@@ -41,6 +41,17 @@ window.addEventListener('load', () => {
     return false;
   }
 
+  function findAndLogVariants() {
+    const variants = document.querySelectorAll('.trainer_variant, [data-id="trainer_variants"] a');
+
+    if (variants.length > 0) {
+      const variantTexts = Array.from(variants).map(v => v.textContent);
+      console.log('🔘 ВАРИАНТЫ ОТВЕТОВ:', variantTexts.join(', '));
+      return variantTexts;
+    }
+    return false;
+  }
+
   if (!findAndLogQuestion()) {
     const observer = new MutationObserver(() => {
       if (findAndLogQuestion()) {
@@ -53,10 +64,16 @@ window.addEventListener('load', () => {
         const data = JSON.parse(xhr.responseText);
         answer = data[question]
         if (answer === " ") {
-          answer = "пробел"
+          answer = "(раздельно)"
         }
         else if (answer === undefined) {
-          answer = "либо слитно, либо мы не знаем ответ"
+          variants = findAndLogVariants()
+          if (variants.includes("(слитно)")) {
+            answer = "(слитно)"
+          }
+          else {
+            answer = "мы не знаем ответ"
+          }
         }
         console.log("ПРАВИЛЬНЫЙ ОТВЕТ:", answer);
         if (last != question) {
