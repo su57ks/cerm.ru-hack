@@ -26,21 +26,21 @@ window.addEventListener('load', () => {
 
   document.body.appendChild(modal);
   document.getElementById('close-widget').addEventListener('click', () => {
-  modal.remove();
+    modal.remove();
   });
 
   var last = ""
-  
+
   function findAndLogQuestion() {
     const question = document.querySelector('#trainer_question, .trainer_question, [data-id="trainer_question"]');
-    
+
     if (question && question.textContent !== 'Здесь будет вопрос') {
       console.log('📝 ВОПРОС:', question.textContent.trim());
       return question.textContent.trim();
     }
     return false;
   }
-  
+
   if (!findAndLogQuestion()) {
     const observer = new MutationObserver(() => {
       if (findAndLogQuestion()) {
@@ -52,24 +52,29 @@ window.addEventListener('load', () => {
         console.log(xhr.status)
         const data = JSON.parse(xhr.responseText);
         answer = data[question]
-        console.log("ПРАВИЛЬНЫЙ ОТВЕТ:", data[question]);
-        if (last != question)
-        {
-        last = question
-        modal.querySelector('p').textContent = "Правильный ответ: " + data[question];
+        if (answer === " ") {
+          answer = "пробел"
+        }
+        else if (answer === undefined) {
+          answer = "либо слитно, либо мы не знаем ответ"
+        }
+        console.log("ПРАВИЛЬНЫЙ ОТВЕТ:", answer);
+        if (last != question) {
+          last = question
+          modal.querySelector('p').textContent = "Правильный ответ: " + answer;
         }
       }
     });
-    
+
     observer.observe(document.body, {
       childList: true,
-      subtree: true, 
+      subtree: true,
       attributeFilter: ["trainer_question"]
     });
-    
+
     console.log('⏳ Ожидание появления вопроса...');
   }
-  
+
   setTimeout(() => {
     findAndLogVariants();
   }, 1000);
