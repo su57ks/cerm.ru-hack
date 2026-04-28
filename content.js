@@ -1,6 +1,34 @@
 window.addEventListener('load', () => {
   console.log('Страница загружена, начинаю поиск...');
 
+  const modal = document.createElement('div');
+  modal.id = 'my-extension-widget';
+  modal.innerHTML = `
+    <div style="
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 200px;
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(212, 76, 76, 0.2);
+      z-index: 10000;
+      padding: 15px;
+      font-family: Arial, sans-serif;
+    ">
+      <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+        <strong>WGHack</strong>
+        <button id="close-widget" style="background: none; border: none; cursor: pointer;">✕</button>
+      </div>
+      <p>Правильный ответ: </p>
+    </div>
+  `;
+
+  document.body.appendChild(modal);
+  document.getElementById('close-widget').addEventListener('click', () => {
+  modal.remove();
+  });
+
   var last = ""
   
   function findAndLogQuestion() {
@@ -22,13 +50,13 @@ window.addEventListener('load', () => {
         xhr.open('GET', chrome.runtime.getURL('answers.json'), false);
         xhr.send();
         console.log(xhr.status)
-
         const data = JSON.parse(xhr.responseText);
+        answer = data[question]
         console.log("ПРАВИЛЬНЫЙ ОТВЕТ:", data[question]);
         if (last != question)
         {
-        alert("ПРАВИЛЬНЫЙ ОТВЕТ: " + data[question])
         last = question
+        modal.querySelector('p').textContent = "Правильный ответ: " + data[question];
         }
       }
     });
