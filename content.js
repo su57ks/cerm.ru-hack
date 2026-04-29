@@ -38,9 +38,11 @@ window.addEventListener('load', () => {
     }
   });
   document.getElementById('done').addEventListener('click', () => {
-    const buttons = document.querySelectorAll('trainer_variant');
+    console.log("clicked")
+    const buttons = document.querySelectorAll('.trainer_variant');
     answer = modal.querySelector('p').textContent.replace("Правильный ответ: ", "")
     for (const btn of buttons) {
+      console.log("button " + btn.textContent)
       if (btn.textContent === answer) {
         btn.click();
         break;
