@@ -18,7 +18,8 @@ window.addEventListener('load', () => {
     ">
       <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
         <strong>WGHack</strong>
-        <button id="black-theme" style="background: none; border: none; cursor: pointer;">Изменить тему</button>
+        <button id="done" style="background: none; border: none; cursor: pointer; font-size: 10px;">Нажать кнопку</button>
+        <button id="black-theme" style="background: none; border: none; cursor: pointer; font-size: 10px;">Изменить тему</button>
         <button id="close-widget" style="background: none; border: none; cursor: pointer;">✕</button>
       </div>
       <p>Правильный ответ: </p>
@@ -31,11 +32,19 @@ window.addEventListener('load', () => {
   });
   document.getElementById('black-theme').addEventListener('click', () => {
     const innerDiv = modal.querySelector('div');
-    if (innerDiv.style.backgroundColor === "rgba(47, 255, 0, 0.2)")
-      {innerDiv.style.backgroundColor = "rgba(33, 29, 29, 0.2)";}
-    else
-    {
+    if (innerDiv.style.backgroundColor === "rgba(47, 255, 0, 0.2)") { innerDiv.style.backgroundColor = "rgba(33, 29, 29, 0.2)"; }
+    else {
       innerDiv.style.backgroundColor = "rgba(47, 255, 0, 0.2)";
+    }
+  });
+  document.getElementById('done').addEventListener('click', () => {
+    const buttons = document.querySelectorAll('trainer_variant');
+    answer = modal.querySelector('p').textContent.replace("Правильный ответ: ", "")
+    for (const btn of buttons) {
+      if (btn.textContent === answer) {
+        btn.click();
+        break;
+      }
     }
   });
 
