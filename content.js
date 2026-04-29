@@ -9,7 +9,7 @@ window.addEventListener('load', () => {
       bottom: 20px;
       right: 20px;
       width: 200px;
-      background: white;
+      background: rgba(100, 255, 65, 0.2);
       border-radius: 8px;
       box-shadow: 0 2px 10px rgba(212, 76, 76, 0.2);
       z-index: 10000;
@@ -18,6 +18,7 @@ window.addEventListener('load', () => {
     ">
       <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
         <strong>WGHack</strong>
+        <button id="black-theme" style="background: none; border: none; cursor: pointer;">Темный режим</button>
         <button id="close-widget" style="background: none; border: none; cursor: pointer;">✕</button>
       </div>
       <p>Правильный ответ: </p>
@@ -27,6 +28,10 @@ window.addEventListener('load', () => {
   document.body.appendChild(modal);
   document.getElementById('close-widget').addEventListener('click', () => {
     modal.remove();
+  });
+  document.getElementById('black-theme').addEventListener('click', () => {
+    const innerDiv = modal.querySelector('div');
+    innerDiv.style.backgroundColor = "rgba(33, 29, 29, 0.2)";
   });
 
   var last = ""
